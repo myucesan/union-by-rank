@@ -22,15 +22,28 @@ class Main {
       return parent[x] == x ? x: (parent[x] = find(parent[x]));
     }
  // this returns false if x and y are in the same set
-    private boolean union(int x, int y) {
-      int xnode = find(x);
-      int ynode = find(y);
-      // we merge the representative node of a smaller (lower rank) disjoint set with the set with the higher rank per agreement
-        if (rank[xnode] > rank[ynode]) parent[ynode] = parent[xnode];
-        else if (rank[xnode] < rank[ynode]) parent[xnode] = parent[ynode];
-        else if (xnode != ynode) rank[parent[ynode] = xnode]++;
-        return xnode != ynode;
+    boolean union(int i, int j) {
+        // the the nodes are equivalent to their indices
+        int leftSubTree = find(this.getParent()[i]);
+        int rightSubTree = find(this.getParent()[j]);
+                // we merge the representative node of a smaller (lower rank) disjoint set with the set with the higher rank per agreement
+        if (find(i) != find(j)) {
+            if (getRank()[leftSubTree] > getRank()[rightSubTree]) {
+                this.getParent()[rightSubTree] = leftSubTree;
+            } else if (getRank()[rightSubTree] > getRank()[leftSubTree]) {
+                this.getParent()[leftSubTree] = rightSubTree;
+            } else if (getRank()[leftSubTree] == getRank()[rightSubTree]) {
+                this.getParent()[Math.max(leftSubTree, rightSubTree)] = this.getParent()[Math.min(leftSubTree, rightSubTree)];
+                this.getRank()[Math.min(leftSubTree, rightSubTree)]++;
+            }
+
+            return true;
+        }
+
+        return false;
     }
+
+
 
 }
 
