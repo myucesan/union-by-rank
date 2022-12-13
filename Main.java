@@ -15,11 +15,21 @@ class Main {
       parent[i] = i; // At the beginning every node is the parent of itself. This is equivalent to the MakeSet() theoretical function of the Union-Find
     }
   }
-
-    private int find(int x) {
-      // the parent of a set of disjoint nodes is the "representative" of that set
+    /**
+     * NB: this function should also do path compression
+     *
+     * @param i index of a node
+     * @return the root of the subtree containing i.
+     */
+int find(int i) {
+        // the parent of a set of disjoint nodes is the "representative" of that set
       // if the node itself is its parent then just return the node, other return the node that is the representative
-      return parent[x] == x ? x: (parent[x] = find(parent[x]));
+        int parent = this.getParent()[i];
+        if (parent  == i) {
+            return i;
+        }
+
+        return parent = find(parent); // path compression
     }
  // this returns false if x and y are in the same set
     boolean union(int i, int j) {
